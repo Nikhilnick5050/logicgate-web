@@ -1,0 +1,1004 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Gates Hub - Learn Digital Electronics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gate-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .gate-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-color: #0ea5e9;
+        }
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(14, 165, 233, 0.1);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .truth-table {
+            border-collapse: collapse;
+            width: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .truth-table th, .truth-table td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        
+        .truth-table th {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .truth-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .active-gate {
+            border-color: #0ea5e9;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+        }
+        
+        .gate-symbol {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .profile-card {
+            transition: all 0.4s ease;
+            background: linear-gradient(135deg, #1e293b, #334155);
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link.active {
+            color: #0ea5e9;
+            border-bottom: 3px solid #0ea5e9;
+            font-weight: 600;
+        }
+        
+        .gate-figure {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+        }
+        
+        .gate-svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .input-output {
+            transition: all 0.3s ease;
+        }
+        
+        .input-output.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(14, 165, 233, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .animate-slideIn {
+            animation: slideIn 0.8s ease-out;
+        }
+        
+        .animate-bounceIn {
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, 15px); }
+            100% { transform: translate(0, -0px); }
+        }
+        
+        .developer-panel {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .footer-section {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.2);
+        }
+        
+        .gate-image {
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        }
+        
+        .gate-image:hover {
+            transform: scale(1.05) rotate(2deg);
+            filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.2));
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-microchip text-white"></i>
+                </div>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">Logic Gates Hub</h1>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="nav-menu hidden md:flex space-x-8" id="navMenu">
+                <a href="#home" class="nav-link active text-gray-700 hover:text-blue-600 font-medium transition duration-300">Home</a>
+                <a href="#introduction" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">About</a>
+                <a href="#gates" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">Logic Gates</a>
+                <a href="#applications" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">Applications</a>
+                <a href="#acknowledgement" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">Acknowledgement</a>
+                <!-- Theme Toggle -->
+                <button class="theme-toggle text-gray-700 hover:text-blue-600 transition duration-300" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+            
+            <button class="md:hidden text-gray-700" id="mobileMenuToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden bg-white py-4 hidden shadow-lg" id="mobileMenu">
+            <div class="container mx-auto px-4 flex flex-col space-y-4">
+                <a href="#home" class="nav-link active text-gray-700 hover:text-blue-600 font-medium transition duration-300">Home</a>
+                <a href="#introduction" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">About</a>
+                <a href="#gates" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">Logic Gates</a>
+                <a href="#applications" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">Applications</a>
+                <a href="#acknowledgement" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition duration-300">Acknowledgement</a>
+                <button class="theme-toggle text-gray-700 hover:text-blue-600 text-left transition duration-300" id="themeToggleMobile">
+                    <i class="fas fa-moon mr-2"></i> Toggle Theme
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-24 overflow-hidden">
+        <!-- Animated Bubbles -->
+        <div class="bubble w-20 h-20 top-10 left-10 opacity-30"></div>
+        <div class="bubble w-32 h-32 top-40 right-20 opacity-20" style="animation-delay: 2s;"></div>
+        <div class="bubble w-16 h-16 bottom-20 left-1/4 opacity-40" style="animation-delay: 4s;"></div>
+        <div class="bubble w-24 h-24 bottom-10 right-1/3 opacity-25" style="animation-delay: 6s;"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-bounceIn">Understanding Logic Gates</h1>
+                <p class="text-xl mb-10 animate-slideIn">Learn the fundamental building blocks of digital electronics and computer systems through interactive lessons and animations.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slideIn">
+                    <a href="#gates" class="bg-white text-blue-700 font-semibold py-4 px-8 rounded-xl shadow-xl hover:bg-gray-100 transition duration-300 transform hover:scale-105 pulse">Explore Logic Gates</a>
+                    <a href="#applications" class="bg-transparent border-2 border-white text-white font-semibold py-4 px-8 rounded-xl hover:bg-white hover:text-blue-700 transition duration-300 transform hover:scale-105">See Applications</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">About Logic Gates</h2>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-10 mb-10 shadow-lg floating">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6">What are Logic Gates?</h3>
+                    <p class="text-gray-600 mb-6 text-lg">
+                        Logic gates are the fundamental building blocks of digital circuits. They perform basic logical functions that are essential to digital circuits. 
+                        Most electronic devices we use today contain circuits that implement logic gates.
+                    </p>
+                    <p class="text-gray-600 text-lg">
+                        These gates operate on binary values, typically 0 (false) and 1 (true). By combining these simple gates in various ways, 
+                        complex digital systems can be built, from simple calculators to advanced computers.
+                    </p>
+                </div>
+                
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-10 shadow-lg floating" style="animation-delay: 0.5s;">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6">How They Work</h3>
+                    <p class="text-gray-600 text-lg">
+                        Each logic gate follows a specific truth table that defines its output for every possible combination of inputs. 
+                        The behavior of these gates can be described using Boolean algebra, which uses logical operators like AND, OR, and NOT.
+                    </p>
+                    <p class="text-gray-600 mt-6 text-lg">
+                        In physical implementations, logic gates are primarily implemented using diodes or transistors acting as electronic switches.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logic Gates Section -->
+    <section id="gates" class="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Types of Logic Gates</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- Gate Selection Cards -->
+                <div class="gate-card bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent cursor-pointer transition-all duration-300 active-gate" data-gate="and">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 p-4 gate-image">
+                            <!-- AND Gate Figure -->
+                            <img src="https://i.pinimg.com/236x/85/d7/c9/85d7c9cb2baf05fa91570b1a2fcdc6ee.jpg" alt="AND Gate" class="w-full h-auto rounded-lg">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">AND Gate</h3>
+                    </div>
+                    <p class="text-gray-600 text-center">Outputs true only when all inputs are true.</p>
+                </div>
+                
+                <div class="gate-card bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent cursor-pointer transition-all duration-300" data-gate="or">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 p-4 gate-image">
+                            <!-- OR Gate Figure -->
+                            <img src="https://cdn.makecode.com/blob/e8c22cbac91ce65f2b1d85b1007a754daf6cab01/static/cp/learn/logic-lab/logic-gates/or-gate.png" alt="OR Gate" class="w-full h-auto rounded-lg">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">OR Gate</h3>
+                    </div>
+                    <p class="text-gray-600 text-center">Outputs true when at least one input is true.</p>
+                </div>
+                
+                <div class="gate-card bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent cursor-pointer transition-all duration-300" data-gate="not">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 p-4 gate-image">
+                            <!-- NOT Gate Figure -->
+                            <img src="https://circuitglobe.com/wp-content/uploads/2015/12/NOT-GATE-FIG-5-compressor.jpg" alt="NOT Gate" class="w-full h-auto rounded-lg">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">NOT Gate</h3>
+                    </div>
+                    <p class="text-gray-600 text-center">Outputs the inverse of the input (inverter).</p>
+                </div>
+                
+                <div class="gate-card bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent cursor-pointer transition-all duration-300" data-gate="nand">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 p-4 gate-image">
+                            <!-- NAND Gate Figure -->
+                            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20241106120427458505/2-Input-NAND-Gate-X.png" alt="NAND Gate" class="w-full h-auto rounded-lg">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">NAND Gate</h3>
+                    </div>
+                    <p class="text-gray-600 text-center">Outputs false only when all inputs are true.</p>
+                </div>
+                
+                <div class="gate-card bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent cursor-pointer transition-all duration-300" data-gate="nor">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 p-4 gate-image">
+                            <!-- NOR Gate Figure -->
+                            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20241023113504535784/image.png" alt="NOR Gate" class="w-full h-auto rounded-lg">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">NOR Gate</h3>
+                    </div>
+                    <p class="text-gray-600 text-center">Outputs true only when all inputs are false.</p>
+                </div>
+                
+                <div class="gate-card bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent cursor-pointer transition-all duration-300" data-gate="xor">
+                    <div class="flex flex-col items-center mb-4">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 p-4 gate-image">
+                            <!-- XOR Gate Figure -->
+                            <img src="https://www.computerscience.gcse.guru/wp-content/uploads/2016/11/XOR.png" alt="XOR Gate" class="w-full h-auto rounded-lg">
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">XOR Gate</h3>
+                    </div>
+                    <p class="text-gray-600 text-center">Outputs true when inputs are different.</p>
+                </div>
+            </div>
+            
+            <!-- Gate Details Section -->
+            <div class="bg-white rounded-2xl p-10 shadow-2xl animate-bounceIn" id="gate-details">
+                <div class="flex flex-col lg:flex-row gap-10">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-3xl font-bold text-gray-800 mb-6" id="gate-title">AND Gate</h3>
+                        <p class="text-gray-600 mb-8 text-lg" id="gate-description">
+                            The AND gate is a basic digital logic gate that implements logical conjunction. 
+                            It outputs true or high (1) only when all its inputs are true or high (1).
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">Truth Table</h4>
+                        <div class="overflow-x-auto mb-8">
+                            <table class="truth-table rounded-lg overflow-hidden" id="truth-table">
+                                <thead>
+                                    <tr>
+                                        <th>Input A</th>
+                                        <th>Input B</th>
+                                        <th>Output Y</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">Boolean Expression</h4>
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-200 mb-8">
+                            <code class="text-xl font-mono text-blue-700 font-bold" id="boolean-expression">Y = A • B</code>
+                        </div>
+                        
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">Common Uses</h4>
+                        <p class="text-gray-600 mb-4 text-lg" id="gate-uses">
+                            AND gates are commonly used in data validation circuits, security systems where multiple conditions must be met, and in the construction of more complex logic circuits like adders and multiplexers.
+                        </p>
+                    </div>
+                    
+                    <div class="lg:w-1/2 flex flex-col items-center justify-center">
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-2xl shadow-lg border border-blue-200 w-full max-w-md mb-8">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-6 text-center">Gate Figure</h4>
+                            <div class="flex justify-center">
+                                <!-- Gate Figure Image -->
+                                <div class="w-64 h-40 bg-white rounded-xl flex items-center justify-center border-2 border-dashed border-blue-300 p-4 gate-image" id="gate-figure">
+                                    <img src="https://via.placeholder.com/250x150/3B82F6/FFFFFF?text=AND+Gate" alt="AND Gate" class="w-full h-auto rounded-lg">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-2xl shadow-lg border border-blue-200 w-full max-w-md">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-6 text-center">Interactive Demo</h4>
+                            <div class="flex justify-center space-x-8 mb-6">
+                                <div class="text-center">
+                                    <div class="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center mx-auto mb-3 input-output" id="input-a">A=0</div>
+                                    <span class="text-sm text-gray-600 font-medium">Input A</span>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center mx-auto mb-3 input-output" id="input-b">B=0</div>
+                                    <span class="text-sm text-gray-600 font-medium">Input B</span>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center mx-auto mb-3 input-output" id="output">Y=0</div>
+                                    <span class="text-sm text-gray-600 font-medium">Output Y</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-center space-x-6">
+                                <button class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition duration-300 transform hover:scale-105 shadow-lg" id="toggle-a">Toggle A</button>
+                                <button class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition duration-300 transform hover:scale-105 shadow-lg" id="toggle-b">Toggle B</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Applications of Logic Gates</h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-calculator text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Arithmetic Circuits</h3>
+                        <p class="text-gray-600">Logic gates form the basis of arithmetic circuits like adders, subtractors, and multipliers used in calculators and computer processors.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-memory text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Memory Units</h3>
+                        <p class="text-gray-600">Flip-flops and latches built from logic gates are used to create memory cells in RAM, registers, and other storage devices.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Security Systems</h3>
+                        <p class="text-gray-600">Logic gates are used in access control systems, alarm circuits, and security devices where multiple conditions must be met.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-tv text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Display Systems</h3>
+                        <p class="text-gray-600">Seven-segment displays, LED matrices, and other display technologies use logic gates for decoding and driving signals.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-exchange-alt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Communication Systems</h3>
+                        <p class="text-gray-600">Logic gates are used in encoders, decoders, multiplexers, and demultiplexers for data transmission and signal processing.</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fas fa-microchip text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Microprocessors</h3>
+                        <p class="text-gray-600">The central processing units (CPUs) in computers and smartphones contain millions of logic gates that perform all computational tasks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acknowledgement Section -->
+    <section id="acknowledgement" class="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Acknowledgement</h2>
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl p-10 shadow-2xl">
+                <div class="text-center mb-10">
+                    <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-handshake text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-4">Our Gratitude</h3>
+                </div>
+                
+                <div class="prose prose-lg max-w-none text-gray-600">
+                    <p class="mb-6 text-lg">
+                        We would like to express our sincere gratitude to our Digital Electronics course instructor, <strong>Dr. Amruta  Mahajan</strong>, for their invaluable guidance, support, and encouragement throughout this project.
+                    </p>
+                    
+                    <p class="mb-6 text-lg">
+                        We are also thankful to <strong>PCCOE, Pune</strong> for providing the necessary resources and environment that facilitated our learning and research in the field of digital electronics.
+                    </p>
+                    
+                    <p class="mb-6 text-lg">
+                        Special thanks to our classmates and colleagues who provided feedback and suggestions that helped us improve this educational platform.
+                    </p>
+                    
+                    <p class="text-lg">
+                        This project was developed as part of our Digital Electronics coursework with the aim of creating an interactive learning resource for students interested in understanding the fundamentals of logic gates and digital circuits.
+                    </p>
+                </div>
+                
+                <div class="mt-10 pt-8 border-t border-gray-200 text-center">
+                    <p class="text-gray-600 text-lg">
+                        <strong>Nikhil Shinde, Piyush Waghmare, and Kavya Marathe</strong><br>
+                        Digital Electronics Project | DECO Research Project<br>
+                        PCCOE, Pune
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer Panel -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">Project Developers</h2>
+            
+            <div class="developer-panel max-w-6xl mx-auto p-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Nikhil's Profile -->
+                    <div class="profile-card rounded-2xl p-8 text-center transform hover:scale-105 transition duration-500">
+                        <div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <i class="fas fa-code text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Nikhil Shinde</h3>
+                        <p class="text-blue-200 mb-4"></p>
+                        <p class="text-gray-300 mb-6"></p>
+                        <div class="flex justify-center space-x-5">
+                            <a href="https://github.com/Nikhilnick5050" class="social-icon text-white hover:text-blue-300 transition duration-300 text-xl" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/nikhil-shinde-286937367" class="social-icon text-white hover:text-blue-300 transition duration-300 text-xl" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Piyush's Profile -->
+                    <div class="profile-card rounded-2xl p-8 text-center transform hover:scale-105 transition duration-500">
+                        <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <i class="fas fa-server text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Piyush Waghmare</h3>
+                        <p class="text-green-200 mb-4"></p>
+                        <p class="text-gray-300 mb-6"></p>
+                        <div class="flex justify-center space-x-5">
+                            <a href="https://github.com/piyushwaghmare9" class="social-icon text-white hover:text-green-300 transition duration-300 text-xl" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/piyush-waghmare-aa0151381/" class="social-icon text-white hover:text-green-300 transition duration-300 text-xl" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Kavya's Profile -->
+                    <div class="profile-card rounded-2xl p-8 text-center transform hover:scale-105 transition duration-500">
+                        <div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <i class="fas fa-pen-nib text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Kavya Marathe</h3>
+                        <p class="text-purple-200 mb-4"></p>
+                        <p class="text-gray-300 mb-6"></p>
+                        <div class="flex justify-center space-x-5">
+                            <a href="#" class="social-icon text-white hover:text-purple-300 transition duration-300 text-xl" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/kavya-marathe-2692a636a/" class="social-icon text-white hover:text-purple-300 transition duration-300 text-xl" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section bg-gradient-to-br from-gray-900 to-indigo-900 text-white py-16 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-20 h-20 border-2 border-blue-400 rounded-lg transform rotate-12"></div>
+        <div class="absolute top-1/3 right-20 w-16 h-16 border-2 border-purple-400 rounded-full"></div>
+        <div class="absolute bottom-20 left-1/4 w-12 h-12 border-2 border-green-400 transform rotate-45"></div>
+        <div class="absolute bottom-10 right-10 w-24 h-24 border-2 border-yellow-400 rounded-lg"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 max-w-6xl mx-auto">
+            <!-- Brand Section -->
+            <div class="md:col-span-2">
+                <div class="flex items-center mb-6">
+                    <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                        <i class="fas fa-microchip text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Logic Gates Hub</h2>
+                        <p class="text-blue-300 text-sm mt-1">Digital Electronics Education</p>
+                    </div>
+                </div>
+                <p class="text-gray-300 mb-8 text-lg leading-relaxed">
+                    An educational platform dedicated to teaching the fundamentals of digital electronics and logic gates through interactive content and simulations.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="social-icon bg-gradient-to-br from-blue-600 to-indigo-700 w-12 h-12 rounded-xl flex items-center justify-center hover:from-blue-500 hover:to-indigo-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-gradient-to-br from-blue-400 to-cyan-500 w-12 h-12 rounded-xl flex items-center justify-center hover:from-blue-300 hover:to-cyan-400 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-gradient-to-br from-blue-700 to-indigo-800 w-12 h-12 rounded-xl flex items-center justify-center hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-gradient-to-br from-red-600 to-red-700 w-12 h-12 rounded-xl flex items-center justify-center hover:from-red-500 hover:to-red-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-xl font-bold mb-6 relative inline-block">
+                    Quick Links
+                    <span class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
+                </h3>
+                <ul class="space-y-4">
+                    <li>
+                        <a href="#home" class="text-gray-300 hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-blue-400 text-xs mr-3 group-hover:translate-x-1 transition-transform"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#introduction" class="text-gray-300 hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-blue-400 text-xs mr-3 group-hover:translate-x-1 transition-transform"></i>
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#gates" class="text-gray-300 hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-blue-400 text-xs mr-3 group-hover:translate-x-1 transition-transform"></i>
+                            Logic Gates
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#applications" class="text-gray-300 hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-blue-400 text-xs mr-3 group-hover:translate-x-1 transition-transform"></i>
+                            Applications
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#acknowledgement" class="text-gray-300 hover:text-white transition-all duration-300 flex items-center group">
+                            <i class="fas fa-chevron-right text-blue-400 text-xs mr-3 group-hover:translate-x-1 transition-transform"></i>
+                            Acknowledgement
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Contact Info -->
+            <div>
+                <h3 class="text-xl font-bold mb-6 relative inline-block">
+                    Contact Info
+                    <span class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
+                </h3>
+                <ul class="space-y-4 text-gray-300">
+                    <li class="flex items-start">
+                        <i class="fas fa-map-marker-alt mr-3 mt-1 text-blue-400 bg-blue-900 p-2 rounded-lg"></i>
+                        <span>PCCOE, Pune, Maharashtra</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-envelope mr-3 mt-1 text-blue-400 bg-blue-900 p-2 rounded-lg"></i>
+                        <div>
+                            <a href="mailto:nikhilsubsun123@gmail.com" class="block hover:text-white transition-colors">nikhilsubsun123@gmail.com</a>
+                            <a href="mailto:piyushw317@gmail.com" class="block hover:text-white transition-colors mt-1">piyushw317@gmail.com</a>
+                            <a href="mailto:marathesaikavya224@gmail.com" class="block hover:text-white transition-colors mt-1">marathesaikavya224@gmail.com</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Footer Bottom -->
+        <div class="border-t border-gray-700 mt-16 pt-10 text-gray-400">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <p class="text-lg">© 2025 Logic Gates Hub. All rights reserved.</p>
+                </div>
+                <div class="text-center md:text-right">
+                 
+                        
+                    </p>
+                    <p class="text-md bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent font-medium">
+                        Digital Electronics Project | DECO Research Project
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Gate data
+        const gates = {
+            and: {
+                title: "AND Gate",
+                description: "The AND gate is a basic digital logic gate that implements logical conjunction. It outputs true or high (1) only when all its inputs are true or high (1). The AND gate is fundamental in digital electronics and is used in various applications including data validation, security systems, and computational circuits.",
+                truthTable: [
+                    { a: 0, b: 0, output: 0 },
+                    { a: 0, b: 1, output: 0 },
+                    { a: 1, b: 0, output: 0 },
+                    { a: 1, b: 1, output: 1 }
+                ],
+                booleanExpression: "Y = A • B",
+                operation: (a, b) => a && b,
+                uses: "AND gates are commonly used in data validation circuits, security systems where multiple conditions must be met, and in the construction of more complex logic circuits like adders and multiplexers.",
+                figure: `<img src="https://i.pinimg.com/236x/85/d7/c9/85d7c9cb2baf05fa91570b1a2fcdc6ee.jpg" alt="AND Gate" class="w-full h-auto rounded-lg">`
+            },
+            or: {
+                title: "OR Gate",
+                description: "The OR gate is a digital logic gate that implements logical disjunction. It outputs true or high (1) when at least one of its inputs is true or high (1). The OR gate is widely used in digital circuits for decision-making processes and control systems where multiple conditions can trigger an action.",
+                truthTable: [
+                    { a: 0, b: 0, output: 0 },
+                    { a: 0, b: 1, output: 1 },
+                    { a: 1, b: 0, output: 1 },
+                    { a: 1, b: 1, output: 1 }
+                ],
+                booleanExpression: "Y = A + B",
+                operation: (a, b) => a || b,
+                uses: "OR gates are frequently used in alarm systems, control circuits where any of multiple sensors can trigger an action, and in the implementation of logical OR operations in computational circuits.",
+                figure: `<img src="https://cdn.makecode.com/blob/e8c22cbac91ce65f2b1d85b1007a754daf6cab01/static/cp/learn/logic-lab/logic-gates/or-gate.png" alt="OR Gate" class="w-full h-auto rounded-lg">`
+            },
+            not: {
+                title: "NOT Gate",
+                description: "The NOT gate, also known as an inverter, is a digital logic gate that implements logical negation. It outputs the opposite of its input - if the input is true (1), the output is false (0), and vice versa. The NOT gate is essential for creating more complex logic functions and is used in memory circuits and signal inversion.",
+                truthTable: [
+                    { a: 0, output: 1 },
+                    { a: 1, output: 0 }
+                ],
+                booleanExpression: "Y = Ā",
+                operation: (a) => !a,
+                uses: "NOT gates are used for signal inversion, creating complementary signals, and in combination with other gates to form more complex circuits like NAND and NOR gates. They are also essential in memory cells and flip-flops.",
+                figure: `<img src="https://circuitglobe.com/wp-content/uploads/2015/12/NOT-GATE-FIG-5-compressor.jpg" alt="NOT Gate" class="w-full h-auto rounded-lg">`
+            },
+            nand: {
+                title: "NAND Gate",
+                description: "The NAND gate (NOT-AND) is a digital logic gate that produces an output which is the inverse of an AND gate. It outputs false (0) only when all its inputs are true (1). NAND gates are significant because they are functionally complete, meaning any Boolean function can be implemented using only NAND gates.",
+                truthTable: [
+                    { a: 0, b: 0, output: 1 },
+                    { a: 0, b: 1, output: 1 },
+                    { a: 1, b: 0, output: 1 },
+                    { a: 1, b: 1, output: 0 }
+                ],
+                booleanExpression: "Y = (A • B)'",
+                operation: (a, b) => !(a && b),
+                uses: "NAND gates are universal gates used to construct any other logic function. They are commonly used in flash memory, digital circuits, and as the basic building block in many integrated circuits due to their functional completeness.",
+                figure: `<img src="https://media.geeksforgeeks.org/wp-content/uploads/20241106120427458505/2-Input-NAND-Gate-X.png" alt="NAND Gate" class="w-full h-auto rounded-lg">`
+            },
+            nor: {
+                title: "NOR Gate",
+                description: "The NOR gate (NOT-OR) is a digital logic gate that produces an output which is the inverse of an OR gate. It outputs true (1) only when all its inputs are false (0). Like NAND gates, NOR gates are also functionally complete and can be used to implement any Boolean function.",
+                truthTable: [
+                    { a: 0, b: 0, output: 1 },
+                    { a: 0, b: 1, output: 0 },
+                    { a: 1, b: 0, output: 0 },
+                    { a: 1, b: 1, output: 0 }
+                ],
+                booleanExpression: "Y = (A + B)'",
+                operation: (a, b) => !(a || b),
+                uses: "NOR gates are universal gates used in the construction of other logic functions. They are commonly found in SR latches, flip-flops, and are used in applications where an active-low output is required.",
+                figure: `<img src="https://media.geeksforgeeks.org/wp-content/uploads/20241023113504535784/image.png" alt="NOR Gate" class="w-full h-auto rounded-lg">`
+            },
+            xor: {
+                title: "XOR Gate",
+                description: "The XOR gate (exclusive OR) is a digital logic gate that outputs true (1) only when the inputs are different. If both inputs are the same, the output is false (0). XOR gates are commonly used in arithmetic circuits, parity generators, and cryptographic applications.",
+                truthTable: [
+                    { a: 0, b: 0, output: 0 },
+                    { a: 0, b: 1, output: 1 },
+                    { a: 1, b: 0, output: 1 },
+                    { a: 1, b: 1, output: 0 }
+                ],
+                booleanExpression: "Y = A ⊕ B",
+                operation: (a, b) => a !== b,
+                uses: "XOR gates are essential in binary addition circuits (half-adders and full-adders), parity checkers and generators for error detection, and in cryptographic algorithms for encryption and decryption operations.",
+                figure: `<img src="https://www.computerscience.gcse.guru/wp-content/uploads/2016/11/XOR.png" alt="XOR Gate" class="w-full h-auto rounded-lg">`
+            }
+        };
+
+        // Current state for interactive demo
+        let currentGate = 'and';
+        let inputA = 0;
+        let inputB = 0;
+
+        // DOM elements
+        const gateCards = document.querySelectorAll('.gate-card');
+        const gateTitle = document.getElementById('gate-title');
+        const gateDescription = document.getElementById('gate-description');
+        const gateUses = document.getElementById('gate-uses');
+        const truthTable = document.getElementById('truth-table');
+        const booleanExpression = document.getElementById('boolean-expression');
+        const gateFigure = document.getElementById('gate-figure');
+        const inputAElement = document.getElementById('input-a');
+        const inputBElement = document.getElementById('input-b');
+        const outputElement = document.getElementById('output');
+        const toggleAButton = document.getElementById('toggle-a');
+        const toggleBButton = document.getElementById('toggle-b');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+
+        // Function to update gate details
+        function updateGateDetails(gateType) {
+            const gate = gates[gateType];
+            
+            // Update text content
+            gateTitle.textContent = gate.title;
+            gateDescription.textContent = gate.description;
+            booleanExpression.textContent = gate.booleanExpression;
+            gateUses.textContent = gate.uses;
+            gateFigure.innerHTML = gate.figure;
+            
+            // Update truth table
+            const tbody = truthTable.querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            gate.truthTable.forEach(row => {
+                const tr = document.createElement('tr');
+                
+                if (gateType === 'not') {
+                    // Single input for NOT gate
+                    tr.innerHTML = `
+                        <td>${row.a}</td>
+                        <td>-</td>
+                        <td>${row.output}</td>
+                    `;
+                } else {
+                    // Two inputs for other gates
+                    tr.innerHTML = `
+                        <td>${row.a}</td>
+                        <td>${row.b}</td>
+                        <td>${row.output}</td>
+                    `;
+                }
+                
+                tbody.appendChild(tr);
+            });
+            
+            // Update interactive demo
+            updateDemo();
+        }
+
+        // Function to update interactive demo
+        function updateDemo() {
+            const gate = gates[currentGate];
+            let output;
+            
+            if (currentGate === 'not') {
+                output = gate.operation(inputA);
+                inputBElement.textContent = 'B=-';
+                inputBElement.style.backgroundColor = '#9ca3af';
+                inputBElement.classList.remove('active');
+                toggleBButton.disabled = true;
+                toggleBButton.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                output = gate.operation(inputA, inputB);
+                inputBElement.textContent = `B=${inputB}`;
+                inputBElement.style.backgroundColor = inputB ? '#10b981' : '#9ca3af';
+                if (inputB) inputBElement.classList.add('active');
+                else inputBElement.classList.remove('active');
+                toggleBButton.disabled = false;
+                toggleBButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            inputAElement.textContent = `A=${inputA}`;
+            inputAElement.style.backgroundColor = inputA ? '#10b981' : '#9ca3af';
+            if (inputA) inputAElement.classList.add('active');
+            else inputAElement.classList.remove('active');
+            
+            outputElement.textContent = `Y=${output ? 1 : 0}`;
+            outputElement.style.backgroundColor = output ? '#10b981' : '#9ca3af';
+            if (output) outputElement.classList.add('active');
+            else outputElement.classList.remove('active');
+        }
+
+        // Event listeners for gate selection
+        gateCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove active class from all cards
+                gateCards.forEach(c => c.classList.remove('active-gate'));
+                
+                // Add active class to clicked card
+                card.classList.add('active-gate');
+                
+                // Update current gate
+                currentGate = card.getAttribute('data-gate');
+                
+                // Reset inputs for NOT gate
+                if (currentGate === 'not') {
+                    inputB = 0;
+                }
+                
+                // Update gate details
+                updateGateDetails(currentGate);
+                
+                // Smooth scroll to gate details section
+                document.getElementById('gate-details').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Event listeners for toggle buttons
+        toggleAButton.addEventListener('click', () => {
+            inputA = inputA ? 0 : 1;
+            updateDemo();
+        });
+
+        toggleBButton.addEventListener('click', () => {
+            inputB = inputB ? 0 : 1;
+            updateDemo();
+        });
+
+        // Event listeners for navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Update active nav link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Mobile menu toggle
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Theme toggle
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // Initialize with AND gate
+        updateGateDetails('and');
+    </script>
+</body>
+</html>
