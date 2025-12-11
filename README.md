@@ -107,4 +107,4 @@ Created an engaging learning environment
 
 Provided hands-on experience with logic gates
 
-Developed accessible educational resources
+Developed accessible educational resource
